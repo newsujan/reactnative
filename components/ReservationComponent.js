@@ -59,7 +59,7 @@ class Reservation extends Component {
   }
 
   async obtainNotificationPermission(){
-    let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS)
+    let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
     if (permission.status !== 'granted'){
       permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
       if(permission.status !== 'granted'){
@@ -73,7 +73,7 @@ class Reservation extends Component {
     await this.obtainNotificationPermission();
     Notifications.presentLocalNotificationAsync({
       title: 'Your Reservation',
-      body: 'Reservation for' + date + 'requested',
+      body: 'Reservation for ' + date + ' requested',
       ios: {
         sound: true
       },
