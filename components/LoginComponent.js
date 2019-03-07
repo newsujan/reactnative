@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { Icon, Input, CheckBox, Button } from 'react-native-elements';
-import { SecureStore, Permissions, ImagePicker } from 'expo';
+import { SecureStore, Permissions, ImagePicker, Asset, ImageManipulator } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -140,17 +140,33 @@ class RegisterTab extends Component{
 
       if(!capturedImage.cancelled){
         console.log(capturedImage);
-        this.setState({imageUrl: capturedImage.uri});
+        this.processImage(capturedImage.uri);
       }
     }
   }
+
+  processImage = async (imageUri) => {
+    let processedImage = await ImageManipulator.manipulateAsync(
+        imageUri,
+        [
+          {resize: {width: 400}}
+        ],
+        {format: 'png'}
+    );
+    this.setState({ imageUrl: processedImage.uri});
+  }
+
 
   handleRegister(){
     console.log(JSON.stringify(this.state));
     if(this.state.remember){
       SecureStore.setItemAsync(
         'userinfo',
-        JSON.stringify({username: this.state.username, password: this.state.password})
+        JSON.stringify({username: this.state.username,
+          email: this.state.email,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          password: this.state.password})
       )
       .catch((error) => console.log('Couldnot save user info',error));
     }
