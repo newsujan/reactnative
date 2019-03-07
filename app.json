@@ -1,6 +1,8 @@
 {
   "expo": {
     "name": "confusion",
+    "icon": "./icon.png",
+    "version": "1.0.0",
     "slug": "confusion",
     "privacy": "public",
     "sdkVersion": "32.0.0",
@@ -23,7 +25,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "net.food.confusion.confusion",
       "supportsTablet": true
+    },
+    "android":{
+      "package": "net.food.confusion.confusion"
     }
   }
 }
